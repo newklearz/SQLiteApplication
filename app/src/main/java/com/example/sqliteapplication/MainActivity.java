@@ -27,13 +27,13 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         this.myDb = new DatabaseHelper(this);
 
-//        editName = (EditText) findViewById(R.id.);
-//        editName = (EditText) findViewById(R.id.);
-//        editName = (EditText) findViewById(R.id.);
-//        editName = (Button) findViewById(R.id.);
+        editName = (EditText) findViewById(R.id.editTextTextPersonName4);
+        editSurname = (EditText) findViewById(R.id.editTextTextPersonName5);
+        editMarks = (EditText) findViewById(R.id.editTextTextPersonName6);
+        btnAddData= (Button) findViewById(R.id.button_add);
 //        btnViewAll = (Button) findViewById(R.id.)
         addData();
-        viewAll();
+  //      viewAll();
     }
 
     public void viewAll()
