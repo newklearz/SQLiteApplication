@@ -2,6 +2,7 @@ package com.example.sqliteapplication;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -46,9 +47,12 @@ public class DatabaseHelper extends SQLiteOpenHelper
         contentValues.put(COLUMN_SURNAME, surname);
         contentValues.put(COLUMN_MARKS, marks);
         long result = db.insert(TABLE_NAME, null, contentValues);
-        if (result == -1)
-            return false;
-        else
-            return true;
+        return result != -1;
+    }
+
+    public Cursor getAllData()
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.rawQuery("SELECT * FROM " +TABLE_NAME, null);
     }
 }
