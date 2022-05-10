@@ -20,7 +20,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
         super(context, DATABASE_NAME, null, 1);
         SQLiteDatabase db = this.getWritableDatabase();
     }
-
+//
     @Override
     public void onCreate(SQLiteDatabase db)
     {
