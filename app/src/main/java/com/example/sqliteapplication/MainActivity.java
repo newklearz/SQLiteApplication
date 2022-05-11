@@ -16,9 +16,11 @@ import androidx.appcompat.app.AppCompatActivity;
 public class MainActivity extends AppCompatActivity
 {
     private DatabaseHelper myDb;
-    private EditText editName, editSurname, editMarks;
+    private EditText editName, editSurname, editMarks, editTextId;
     private Button btnAddData;
     private Button btnViewAll;
+    private Button btnUpdate;
+    private Button btnDelete;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState)
@@ -27,13 +29,56 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         this.myDb = new DatabaseHelper(this);
 
-        editName = (EditText) findViewById(R.id.editTextTextPersonName4);
-        editSurname = (EditText) findViewById(R.id.editTextTextPersonName5);
-        editMarks = (EditText) findViewById(R.id.editTextTextPersonName6);
+        editName = (EditText) findViewById(R.id.editTextTextName);
+        editSurname = (EditText) findViewById(R.id.editTextTextSurname);
+        editMarks = (EditText) findViewById(R.id.editTextTextMarks);
+        editTextId = (EditText) findViewById(R.id.editTextTextID);
         btnAddData= (Button) findViewById(R.id.button_add);
-//        btnViewAll = (Button) findViewById(R.id.)
+        btnViewAll = (Button) findViewById(R.id.button_view_all);
+        btnUpdate = (Button) findViewById(R.id.button_update);
+        btnDelete = (Button) findViewById(R.id.button_delete);
         addData();
-  //      viewAll();
+        viewAll();
+        updateData();
+        deleteData();
+    }
+
+    public void deleteData()
+    {
+        btnDelete.setOnClickListener(
+                view ->
+                {
+                    Integer deletedRows = myDb.deleteData(editTextId.getText().toString());
+                    if(deletedRows > 0)
+                    {
+                        Toast.makeText(MainActivity.this,
+                                "Data Deleted", Toast.LENGTH_LONG).show();
+                    }
+                    else
+                        Toast.makeText(MainActivity.this,
+                                "Data not Deleted", Toast.LENGTH_LONG).show();
+                }
+        );
+    }
+
+    public void updateData()
+    {
+        btnUpdate.setOnClickListener(
+                view ->
+                {
+                    boolean isUpdate = myDb.updateData(editTextId.getText().toString(),
+                            editName.getText().toString(), editSurname.getText().toString(),
+                            editMarks.getText().toString());
+                    if(isUpdate)
+                    {
+                        Toast.makeText(MainActivity.this,
+                                "Data Updated", Toast.LENGTH_LONG).show();
+                    }
+                   else
+                        Toast.makeText(MainActivity.this,
+                                "Data not Updated", Toast.LENGTH_LONG).show();
+                }
+        );
     }
 
     public void viewAll()
@@ -160,5 +205,35 @@ public class MainActivity extends AppCompatActivity
     public void setBtnViewAll(Button btnViewAll)
     {
         this.btnViewAll = btnViewAll;
+    }
+
+    public Button getBtnUpdate()
+    {
+        return btnUpdate;
+    }
+
+    public void setBtnUpdate(Button btnUpdate)
+    {
+        this.btnUpdate = btnUpdate;
+    }
+
+    public EditText getEditTextId()
+    {
+        return editTextId;
+    }
+
+    public void setEditTextId(EditText editTextId)
+    {
+        this.editTextId = editTextId;
+    }
+
+    public Button getBtnDelete()
+    {
+        return btnDelete;
+    }
+
+    public void setBtnDelete(Button btnDelete)
+    {
+        this.btnDelete = btnDelete;
     }
 }
