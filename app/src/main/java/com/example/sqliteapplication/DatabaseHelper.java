@@ -1,6 +1,8 @@
 package com.example.sqliteapplication;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -18,15 +20,13 @@ public class DatabaseHelper extends SQLiteOpenHelper
     public DatabaseHelper(@Nullable Context context)
     {
         super(context, DATABASE_NAME, null, 1);
-        SQLiteDatabase db = this.getWritableDatabase();
     }
 
     @Override
     public void onCreate(SQLiteDatabase db)
     {
         db.execSQL("create table " + TABLE_NAME +
-                " ( INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                "NAME TEXT, SURENAME TEXT, MARKS INTEGER)");
+                " ( ID INTEGER PRIMARY KEY AUTOINCREMENT, NAME TEXT,SURNAME TEXT,MARKS INTEGER)");
     }
 
     @Override
@@ -36,5 +36,40 @@ public class DatabaseHelper extends SQLiteOpenHelper
     {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
         onCreate(db);
+    }
+
+    public boolean insertData(String name, String surname, String marks)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COLUMN_NAME, name);
+        contentValues.put(COLUMN_SURNAME, surname);
+        contentValues.put(COLUMN_MARKS, marks);
+        long result = db.insert(TABLE_NAME, null, contentValues);
+        return result != -1;
+    }
+
+    public Cursor getAllData()
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.rawQuery("SELECT * FROM " +TABLE_NAME, null);
+    }
+
+    public boolean updateData(String id, String name, String surname, String marks)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COLUMN_ID, id);
+        contentValues.put(COLUMN_NAME, name);
+        contentValues.put(COLUMN_SURNAME, surname);
+        contentValues.put(COLUMN_MARKS, marks);
+        db.update(TABLE_NAME, contentValues, "ID = ?", new String[] { id });
+        return true;
+    }
+
+    public Integer deleteData(String id)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.delete(TABLE_NAME, "ID = ?", new String[] {id});
     }
 }
