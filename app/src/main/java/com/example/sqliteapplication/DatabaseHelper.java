@@ -22,6 +22,8 @@ public class DatabaseHelper extends SQLiteOpenHelper
         super(context, DATABASE_NAME, null, 1);
     }
 
+    // this is called the first time a database is accessed.
+    // There should be code in here to create new database.
     @Override
     public void onCreate(SQLiteDatabase db)
     {
@@ -29,6 +31,8 @@ public class DatabaseHelper extends SQLiteOpenHelper
                 " ( ID INTEGER PRIMARY KEY AUTOINCREMENT, NAME TEXT,SURNAME TEXT,MARKS INTEGER)");
     }
 
+    // this is called if the database version number changes.
+    // It prevents previous users app from breaking when you change the database design.
     @Override
     public void onUpgrade(SQLiteDatabase db,
                           int oldVersion,
@@ -51,7 +55,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
 
     public Cursor getAllData()
     {
-        SQLiteDatabase db = this.getWritableDatabase();
+        SQLiteDatabase db = this.getReadableDatabase();
         return db.rawQuery("SELECT * FROM " +TABLE_NAME, null);
     }
 

@@ -29,14 +29,14 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         this.myDb = new DatabaseHelper(this);
 
-        editName = (EditText) findViewById(R.id.editTextTextName);
-        editSurname = (EditText) findViewById(R.id.editTextTextSurname);
-        editMarks = (EditText) findViewById(R.id.editTextTextMarks);
-        editTextId = (EditText) findViewById(R.id.editTextTextID);
-        btnAddData= (Button) findViewById(R.id.button_add);
-        btnViewAll = (Button) findViewById(R.id.button_view_all);
-        btnUpdate = (Button) findViewById(R.id.button_update);
-        btnDelete = (Button) findViewById(R.id.button_delete);
+        editName = findViewById(R.id.editTextTextName);
+        editSurname = findViewById(R.id.editTextTextSurname);
+        editMarks = findViewById(R.id.editTextTextMarks);
+        editTextId = findViewById(R.id.editTextTextID);
+        btnAddData= findViewById(R.id.button_add);
+        btnViewAll = findViewById(R.id.button_view_all);
+        btnUpdate = findViewById(R.id.button_update);
+        btnDelete = findViewById(R.id.button_delete);
         addData();
         viewAll();
         updateData();
